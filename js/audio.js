@@ -38,8 +38,9 @@ window.GameAudio = (() => {
   }
 
   function playClick(now) {
-    tone(520, now, 0.055, "sine", 0.035);
-  }
+  tone(520, now, 0.10, "triangle", 0.06);
+  tone(660, now + 0.06, 0.10, "sine", 0.05);
+}
 
   function playCorrect(now) {
     tone(523, now, 0.14, "triangle", 0.065);
@@ -81,49 +82,54 @@ window.GameAudio = (() => {
     tone(1047, now + 1.02, 0.42, "triangle", 0.085);
   }
 
-  function play(name) {
-    if (!enabled) return;
+  async function play(name) {
+  if (!enabled) return;
 
-    try {
-      ensureContext();
-      const now = ctx.currentTime;
+  try {
+    ensureContext();
 
-      switch (name) {
-        case "click":
-          playClick(now);
-          break;
-
-        case "correct":
-          playCorrect(now);
-          break;
-
-        case "retry":
-          playRetry(now);
-          break;
-
-        case "heart":
-          playHeart(now);
-          break;
-
-        case "grow":
-          playGrow(now);
-          break;
-
-        case "warning":
-          playWarning(now);
-          break;
-
-        case "final":
-          playFinal(now);
-          break;
-
-        default:
-          playClick(now);
-      }
-    } catch (error) {
-      // 音效失败时，不影响游戏继续运行
+    if (ctx.state === "suspended") {
+      await ctx.resume();
     }
+
+    const now = ctx.currentTime + 0.01;
+
+    switch (name) {
+      case "click":
+        playClick(now);
+        break;
+
+      case "correct":
+        playCorrect(now);
+        break;
+
+      case "retry":
+        playRetry(now);
+        break;
+
+      case "heart":
+        playHeart(now);
+        break;
+
+      case "grow":
+        playGrow(now);
+        break;
+
+      case "warning":
+        playWarning(now);
+        break;
+
+      case "final":
+        playFinal(now);
+        break;
+
+      default:
+        playClick(now);
+    }
+  } catch (error) {
+    console.warn("Audio playback failed:", error);
   }
+}
 
   return {
     play,
