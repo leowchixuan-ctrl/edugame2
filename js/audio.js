@@ -146,7 +146,7 @@ window.GameAudio = (() => {
   }
 }
 
-  return {
+    return {
     play,
 
     isEnabled: () => enabled,
@@ -156,14 +156,16 @@ window.GameAudio = (() => {
     },
 
     toggle() {
-  enabled = !enabled;
+      enabled = !enabled;
 
-  if (enabled) {
-    startBgm();
-    play("click");
-  } else {
-    bgm.pause();
-  }
+      if (enabled) {
+        startBgm();
+        play("click");
+      } else {
+        bgm.pause();
+      }
 
-  return enabled;
-}
+      return enabled;
+    }
+  };
+})();
