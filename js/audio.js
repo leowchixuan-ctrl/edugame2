@@ -1,3 +1,5 @@
+const MASTER_VOLUME = 1.8;
+
 window.GameAudio = (() => {
   let enabled = true;
   let ctx = null;
@@ -19,7 +21,10 @@ window.GameAudio = (() => {
     osc.frequency.setValueAtTime(frequency, start);
 
     gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(volume, start + 0.015);
+    gain.gain.exponentialRampToValueAtTime(
+  Math.min(volume * MASTER_VOLUME, 0.18),
+  start + 0.015
+);
     gain.gain.exponentialRampToValueAtTime(
       0.0001,
       start + duration
