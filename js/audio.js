@@ -38,8 +38,8 @@ window.GameAudio = (() => {
   }
 
   function playClick(now) {
-  tone(520, now, 0.10, "triangle", 0.06);
-  tone(660, now + 0.06, 0.10, "sine", 0.05);
+  tone(600, now, 0.12, "triangle", 0.10);
+  tone(900, now + 0.09, 0.16, "triangle", 0.09);
 }
 
   function playCorrect(now) {
