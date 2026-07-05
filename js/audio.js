@@ -13,7 +13,7 @@ window.GameAudio = (() => {
     }
   }
 
-  function tone(frequency, start, duration, type = "sine", volume = 0.06) {
+  function (frequency, start, duration, type = "sine", volume = 0.06) {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
