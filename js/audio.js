@@ -1,4 +1,4 @@
-const MASTER_VOLUME = 1.8;
+const MASTER_VOLUME = 3.0;
 
 window.GameAudio = (() => {
   let enabled = true;
