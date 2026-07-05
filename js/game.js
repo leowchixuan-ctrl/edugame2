@@ -326,7 +326,11 @@
   function soundIcon() { return window.GameAudio.isEnabled() ? "🔊" : "🔇"; }
 
   function bindCommon() {
-    app.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => play("click")));
+    app.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("pointerdown", () => {
+    play("click");
+  });
+});;
     app.querySelectorAll("[data-action='toggleHost']").forEach(btn => btn.addEventListener("click", () => { state.facilitatorOpen = !state.facilitatorOpen; render(); }));
     app.querySelectorAll("[data-action='sound']").forEach(btn => btn.addEventListener("click", () => { window.GameAudio.toggle(); render(); }));
     app.querySelectorAll("[data-action='fullscreen']").forEach(btn => btn.addEventListener("click", toggleFullscreen));
