@@ -3,7 +3,12 @@ const MASTER_VOLUME = 3.0;
 window.GameAudio = (() => {
   let enabled = true;
   let ctx = null;
+  
+  const bgm = new Audio("./bgm.mp3");
+  bgm.loop = true;
+  bgm.volume = 0.15;
 
+  
   function ensureContext() {
     if (!ctx) {
       ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -13,6 +18,14 @@ window.GameAudio = (() => {
     }
   }
 
+    function startBgm() {
+    if (!enabled || !bgm.paused) return;
+
+    bgm.play().catch(error => {
+      console.warn("BGM playback failed:", error);
+    });
+  }
+  
   function tone(frequency, start, duration, type = "sine", volume = 0.06) {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -94,6 +107,8 @@ window.GameAudio = (() => {
 
     const now = ctx.currentTime + 0.01;
 
+    startBgm();
+
     switch (name) {
       case "click":
         playClick(now);
@@ -141,13 +156,14 @@ window.GameAudio = (() => {
     },
 
     toggle() {
-      enabled = !enabled;
+  enabled = !enabled;
 
-      if (enabled) {
-        play("click");
-      }
+  if (enabled) {
+    startBgm();
+    play("click");
+  } else {
+    bgm.pause();
+  }
 
-      return enabled;
-    }
-  };
-})();
+  return enabled;
+}
